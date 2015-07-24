@@ -43,4 +43,3 @@ The data frame is then averaged for each subject and activity for each variable,
 
 This data frame is returned from the function, meeting the requirements of the assignment.
 
-*Credit for the idea to use these functions goes to Community TA David Hood on the Coursera course forum whose post reminded me of how easy it is to use these functions to achieve this goal.
