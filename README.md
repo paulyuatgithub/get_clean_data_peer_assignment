@@ -1,45 +1,41 @@
-## Readme for run_analysis.R
+# Getting and Cleaning Data - peer assessment project
 
-### Purpose
+The data linked to from the course website represent data collected from the accelerometers from the Samsung Galaxy S smartphone. A full description is available at the site where the data was obtained:
 
-This script processes data from the Human Activity Recognition Using Smartphones Dataset to extract the average means and standard deviations of each variable for a given subject and activity, returning a tidy data frame containing these values.
+http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones
 
-The script was prepared to meet the requirements of an assignment in the Getting and Cleaning Data Course offered on Coursera
+The data for the project:
 
-### Source Data
+https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
 
-credit for the Human Activity Recognition Using Smartphones Dataset to:
+In the run_analysis.R script, functions were created for each step.
 
-Jorge L. Reyes-Ortiz, Davide Anguita, Alessandro Ghio, Luca Oneto.
-Smartlab - Non Linear Complex Systems Laboratory
-DITEN - Universit? degli Studi di Genova.
-Via Opera Pia 11A, I-16145, Genoa, Italy.
-activityrecognition@smartlab.ws
-www.smartlab.ws
+Function r_Data :
+This function takes two variables, the suffix for the filename, folder name in which the file exists.
+Since the data exists in two folders with file names as subject_train, X_train, y_train. 
+The y_data file contains Activity_ID. The X_data file contains data for MeasureID and MeasureName.
+The subject_data file contains SubjectID.
+This function reads the three files from a folder and creates data.frame in R environment with appropriate column names.
+The grep function is used to match only those columns which has MeasureName for mean and standard deviation.
 
-Data available here:
-https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip 
+Function read_test_data :
+This function is used to read the test data into the R environment
 
-With a full description here:
+Function read_train_data :
+This function is used to read the train data into the R environment
 
-http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones 
+Function mergeDataset :
+This function combines the two dataset read in the above functions, by rows.Further, proper name is given to the columns and dataset is returned.
 
-### Assumptions
+Function activityLabels:
+This function takes a dataset as argument and reads the activity labels from text files and merges it with the dataset.
 
-The script assumes the data will be found in the directory "./UCI HAR Dataset/" structured as it is in the linked archive.
-The script requires that the packages "plyr" and "reshape2" are available.
+Function merge_label_data :
+This function runs the activityLabels function to get a activity labelled dataset.
 
-### Use
-To use the script at the prompt, call source("~/run_analysis.R") correcting for file location, then run_analysis(). Assigning the ouput of the script to a data frame is recomended, since the resulting table is too large to simply read on screen.
+Function tidyData:
+This function creates a tidy data set with average of each variable for each activity and each subject.
 
-### Functionality
-The script imports the test and training datasets (X_test.txt and X_train.txt) from the UCI HAR data and combines them into a single dataframe, with the columns named from the features.txt file provided in the archive.
-
-Partial string matching using grep is used to identify the columns that include mean() and std() in their name. These columns of interest are then assigned to a new data frame. 
-
-The activity labels for each observation (provided in Y_test.txt and Y_train.txt) are converted from numeric vectors to factors with the corresponding text activity label (found in activity_labels.txt) using the mapvalues function from plyr, and this factor is added to the data frame containing all the mean and standard deviation observations. An additional column containing the subject id for each observation (read in from subjects_test.txt and subjects_train.txt) is also included.
-
-The data frame is then averaged for each subject and activity for each variable, resulting in a data frame with 180 rows and 81 columns (subject, activity, then the 79 variables from the data set meeting the criteria). This is accomplished using the melt and dcast functions in the reshape2 library*.
-
-This data frame is returned from the function, meeting the requirements of the assignment.
+Function tidy_datafile:
+A new tidy independent dataset is generated and saved a text file to be submitted.
 
